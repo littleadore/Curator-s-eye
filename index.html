@@ -1,12 +1,201 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>我的第一个网站</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Museum Exhibition Design Generator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-
 <body>
-  <h1>你好，世界！</h1>
-  <p>这是我用 GitHub Pages 建的第一个网站。</p>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-museum"></i> Exhibition Design Generator</h1>
+                <p>AI-powered exhibition layout and rendering tool for museum professionals</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Input Form Section -->
+            <section class="input-section">
+                <div class="form-container">
+                    <h2>Exhibition Parameters</h2>
+                    
+                    <form id="exhibitionForm" class="exhibition-form">
+                        <div class="form-group">
+                            <label for="theme">Exhibition Theme *</label>
+                            <input type="text" id="theme" name="theme" required 
+                                   placeholder="e.g., Ancient Civilizations, Modern Art, Science & Technology">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="userFlow">User Flow Pattern</label>
+                            <select id="userFlow" name="userFlow">
+                                <option value="linear">Linear (A → B → C)</option>
+                                <option value="circular">Circular (Loop)</option>
+                                <option value="hub-spoke">Hub & Spoke</option>
+                                <option value="free-flow">Free Flow</option>
+                                <option value="guided">Guided Tour</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="visualKeywords">Visual Keywords</label>
+                            <textarea id="visualKeywords" name="visualKeywords" rows="3"
+                                      placeholder="e.g., minimalist, warm lighting, natural materials, interactive displays"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="materials">Material Preferences</label>
+                            <div class="checkbox-group">
+                                <label><input type="checkbox" name="materials" value="wood"> Wood</label>
+                                <label><input type="checkbox" name="materials" value="metal"> Metal</label>
+                                <label><input type="checkbox" name="materials" value="glass"> Glass</label>
+                                <label><input type="checkbox" name="materials" value="stone"> Stone</label>
+                                <label><input type="checkbox" name="materials" value="fabric"> Fabric</label>
+                                <label><input type="checkbox" name="materials" value="plastic"> Plastic</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lighting">Lighting Method</label>
+                            <select id="lighting" name="lighting">
+                                <option value="natural">Natural Light</option>
+                                <option value="ambient">Ambient Lighting</option>
+                                <option value="spotlight">Spotlight Focus</option>
+                                <option value="dramatic">Dramatic Lighting</option>
+                                <option value="interactive">Interactive Lighting</option>
+                                <option value="minimal">Minimal Lighting</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="budget">Budget Range</label>
+                            <select id="budget" name="budget">
+                                <option value="low">Low Budget ($5K - $20K)</option>
+                                <option value="medium">Medium Budget ($20K - $100K)</option>
+                                <option value="high">High Budget ($100K - $500K)</option>
+                                <option value="premium">Premium Budget ($500K+)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="spaceSize">Exhibition Space Size</label>
+                            <select id="spaceSize" name="spaceSize">
+                                <option value="small">Small (500-1000 sq ft)</option>
+                                <option value="medium">Medium (1000-3000 sq ft)</option>
+                                <option value="large">Large (3000-8000 sq ft)</option>
+                                <option value="extra-large">Extra Large (8000+ sq ft)</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="generate-btn">
+                            <i class="fas fa-magic"></i> Generate Exhibition Design
+                        </button>
+                    </form>
+                    
+                    <!-- Rendering Options -->
+                    <div class="rendering-options">
+                        <h3>Rendering Options</h3>
+                        <div class="option-group">
+                            <label>
+                                <input type="radio" name="renderingMode" value="enhanced" checked>
+                                Enhanced Canvas Renderings
+                            </label>
+                            <label>
+                                <input type="radio" name="renderingMode" value="photos">
+                                Real Museum Photos
+                            </label>
+                            <label>
+                                <input type="radio" name="renderingMode" value="ai">
+                                AI-Generated (Coming Soon)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section" id="resultsSection" style="display: none;">
+                <div class="results-container">
+                    <h2>Generated Exhibition Designs</h2>
+                    
+                    <div class="loading-container" id="loadingContainer">
+                        <div class="loading-spinner"></div>
+                        <p>Generating your exhibition designs...</p>
+                    </div>
+
+                    <div class="renderings-container" id="renderingsContainer">
+                        <div class="rendering-grid">
+                            <div class="rendering-card">
+                                <h3>Front View</h3>
+                                <div class="rendering-placeholder" id="frontView">
+                                    <i class="fas fa-image"></i>
+                                    <p>Front view rendering will appear here</p>
+                                </div>
+                            </div>
+                            
+                            <div class="rendering-card">
+                                <h3>Side View</h3>
+                                <div class="rendering-placeholder" id="sideView">
+                                    <i class="fas fa-image"></i>
+                                    <p>Side view rendering will appear here</p>
+                                </div>
+                            </div>
+                            
+                            <div class="rendering-card">
+                                <h3>Top View</h3>
+                                <div class="rendering-placeholder" id="topView">
+                                    <i class="fas fa-image"></i>
+                                    <p>Top view rendering will appear here</p>
+                                </div>
+                            </div>
+                            
+                            <div class="rendering-card">
+                                <h3>Main View</h3>
+                                <div class="rendering-placeholder" id="mainView">
+                                    <i class="fas fa-image"></i>
+                                    <p>Main view rendering will appear here</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="design-specs" id="designSpecs">
+                            <h3>Design Specifications</h3>
+                            <div class="specs-content" id="specsContent">
+                                <!-- Design specifications will be populated here -->
+                            </div>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button class="btn-secondary" onclick="downloadDesigns()">
+                                <i class="fas fa-download"></i> Download All
+                            </button>
+                            <button class="btn-secondary" onclick="regenerateDesigns()">
+                                <i class="fas fa-redo"></i> Regenerate
+                            </button>
+                            <button class="btn-primary" onclick="exportSpecs()">
+                                <i class="fas fa-file-export"></i> Export Specifications
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2024 Museum Exhibition Design Generator. Built for museum professionals.</p>
+        </footer>
+    </div>
+
+    <script src="ai-integration.js"></script>
+    <script src="enhanced-renderings.js"></script>
+    <script src="unsplash-integration.js"></script>
+    <script src="script.js"></script>
 </body>
-</html>
+</html> 
